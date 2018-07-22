@@ -1,9 +1,11 @@
 package com.codetudes.dogeapi.db.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import javax.persistence.*;
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
@@ -11,19 +13,23 @@ import java.util.Objects;
 public class AppUser {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @Column(name = "secret", nullable = false)
     private String secret;
 
-    @Column(name = "created", nullable = false)
-    private String created;
+    @CreationTimestamp
+    @Column(name = "created")
+    private Timestamp created;
 
-    @Column(name = "updated", nullable = false)
-    private String updated;
+    @UpdateTimestamp
+    @Column(name = "updated")
+    private Timestamp updated;
 
     public long getId() {
         return id;
@@ -49,19 +55,19 @@ public class AppUser {
         this.secret = secret;
     }
 
-    public String getCreated() {
+    public Timestamp getCreated() {
         return created;
     }
 
-    public void setCreated(String created) {
+    public void setCreated(Timestamp created) {
         this.created = created;
     }
 
-    public String getUpdated() {
+    public Timestamp getUpdated() {
         return updated;
     }
 
-    public void setUpdated(String updated) {
+    public void setUpdated(Timestamp updated) {
         this.updated = updated;
     }
 
@@ -71,8 +77,8 @@ public class AppUser {
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", secret='" + secret + '\'' +
-                ", created='" + created + '\'' +
-                ", updated='" + updated + '\'' +
+                ", created=" + created +
+                ", updated=" + updated +
                 '}';
     }
 

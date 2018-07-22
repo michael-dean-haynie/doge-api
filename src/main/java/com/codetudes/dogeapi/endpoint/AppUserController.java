@@ -1,5 +1,7 @@
 package com.codetudes.dogeapi.endpoint;
 
+import com.codetudes.dogeapi.config.error.ResourceNotFoundException;
+import com.codetudes.dogeapi.contract.AppUserDTO;
 import com.codetudes.dogeapi.db.entity.AppUser;
 import com.codetudes.dogeapi.service.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,33 +19,28 @@ public class AppUserController {
     private AppUserService appUserService;
 
     @PostMapping
-    public AppUser createAppUser(@RequestParam("email") String email, @RequestParam("secret") String secret){
-        return appUserService.createAppUser(email, secret);
+    public AppUserDTO createAppUser(@RequestBody AppUserDTO appUserDTO){
+        return appUserService.createAppUser(appUserDTO);
     }
 
-    @GetMapping("test")
-    public Object test(){
-        return "Hello world!";
+    @GetMapping("{id}")
+    public AppUserDTO getAppUser(@PathVariable("id") Long id){
+        return appUserService.findAppUser(id);
     }
 
-    @GetMapping("/{id}")
-    public Object getAppUser(@RequestParam("id") Long id){
-        Optional<AppUser> appUser = appUserService.findAppUser(id);
-        if (appUser.isPresent()){
-            return appUser.get();
-        }
-        else {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
-        }
+    @PatchMapping
+    public AppUserDTO updateAppUser(@RequestBody AppUserDTO appUserDTO) {
+        return appUserService.updateAppUser(appUserDTO);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity deleteAppUser(@RequestParam("id") Long id){
+    @DeleteMapping("{id}")
+    public ResponseEntity deleteAppUser(@PathVariable("id") Long id){
+
         if (appUserService.deleteAppUser(id)){
             return new ResponseEntity(HttpStatus.ACCEPTED);
         }
         else {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            throw new ResourceNotFoundException();
         }
     }
 
