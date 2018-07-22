@@ -1,4 +1,4 @@
-package com.codetudes.dogoapi.db.entity;
+package com.codetudes.dogeapi.db.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
