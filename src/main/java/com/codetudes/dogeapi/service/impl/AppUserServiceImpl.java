@@ -20,14 +20,14 @@ public class AppUserServiceImpl implements AppUserService {
     Mapper mapper;
 
     @Override
-    public AppUserDTO createAppUser(AppUserDTO appUserDTO){
+    public AppUserDTO createAppUser(AppUserDTO appUserDTO) {
         AppUser appUser = mapper.map(appUserDTO, AppUser.class);
         return mapper.map(appUserRepository.save(appUser), AppUserDTO.class);
     }
 
-    public AppUserDTO findAppUser(Long id){
+    public AppUserDTO findAppUser(Long id) {
         Optional<AppUser> appUser = appUserRepository.findById(id);
-        if (!appUser.isPresent()){
+        if (!appUser.isPresent()) {
             throw new ResourceNotFoundException();
         }
 
@@ -36,7 +36,7 @@ public class AppUserServiceImpl implements AppUserService {
 
     public AppUserDTO updateAppUser(AppUserDTO appUserDTO) {
         Optional<AppUser> appUser = appUserRepository.findById(appUserDTO.getId());
-        if (!appUser.isPresent()){
+        if (!appUser.isPresent()) {
             throw new ResourceNotFoundException();
         }
 
@@ -48,8 +48,8 @@ public class AppUserServiceImpl implements AppUserService {
 
     }
 
-    public Boolean deleteAppUser(Long id){
-        if (appUserRepository.existsById(id)){
+    public Boolean deleteAppUser(Long id) {
+        if (appUserRepository.existsById(id)) {
             appUserRepository.deleteById(id);
             return true;
         }

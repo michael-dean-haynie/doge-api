@@ -2,14 +2,11 @@ package com.codetudes.dogeapi.endpoint;
 
 import com.codetudes.dogeapi.config.error.ResourceNotFoundException;
 import com.codetudes.dogeapi.contract.AppUserDTO;
-import com.codetudes.dogeapi.db.entity.AppUser;
 import com.codetudes.dogeapi.service.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("app-user")
@@ -19,12 +16,12 @@ public class AppUserController {
     private AppUserService appUserService;
 
     @PostMapping
-    public AppUserDTO createAppUser(@RequestBody AppUserDTO appUserDTO){
+    public AppUserDTO createAppUser(@RequestBody AppUserDTO appUserDTO) {
         return appUserService.createAppUser(appUserDTO);
     }
 
     @GetMapping("{id}")
-    public AppUserDTO getAppUser(@PathVariable("id") Long id){
+    public AppUserDTO getAppUser(@PathVariable("id") Long id) {
         return appUserService.findAppUser(id);
     }
 
@@ -34,12 +31,11 @@ public class AppUserController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity deleteAppUser(@PathVariable("id") Long id){
+    public ResponseEntity deleteAppUser(@PathVariable("id") Long id) {
 
-        if (appUserService.deleteAppUser(id)){
+        if (appUserService.deleteAppUser(id)) {
             return new ResponseEntity(HttpStatus.ACCEPTED);
-        }
-        else {
+        } else {
             throw new ResourceNotFoundException();
         }
     }
